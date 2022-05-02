@@ -31,7 +31,6 @@ def print_alignment(alignment, word, i, j,word_alignment, diff, pos):
             else:
                 idx = (i + diff) - 1
                 word_alignment = word[idx] + word_alignment
-                # word_alignment = '_' + word_alignment
                 print_alignment(alignment, word, i, j - 1, word_alignment, diff,
                             pos)
     else:
