@@ -3,26 +3,11 @@
 # CPSC 485 - 01
 # 2 May 2022
 
-# Programming Assignment (due May 2):
-#
-# Write a program to calculate the edit distance between two words and output
-# both the matrix of distance calculation and an alignment that demonstrates
-# the result. Your program should ask for input of two words, calculate the
-# edit distance, output the matrix of calculation and an alignment that
-# verifies the edit distance. You may use any programming language that you
-# are most familiar. In front of your submission you should include a
-# paragraph of comments describing how I can compile and test your program,
-# including the required tools/environment. MATLAB is not acceptable since I
-# do not have MATLAB in my computer.
-#
-# The interface of the program looks like the following link.
-#
-# http://wang.ecs.fullerton.edu/cpsc485/editdist.html
-
 import numpy as np
 
 
 def print_alignment(alignment, word, i, j,word_alignment, diff, pos):
+    # if second word
     if pos == 2:
         if i <= 0 and j <= 0:
             print(word_alignment)
@@ -62,12 +47,9 @@ def print_alignment(alignment, word, i, j,word_alignment, diff, pos):
             if alignment[i, j] == 'u':
                 idx = (i + diff) - 1
                 word_alignment = word[idx] + word_alignment
-                # word_alignment = '_' + word_alignment
                 print_alignment(alignment, word, i - 1, j, word_alignment, diff,
                             pos)
             else:
-                # idx = (i + diff) - 1
-                # word_alignment = word[idx] + word_alignment
                 word_alignment = '_' + word_alignment
                 print_alignment(alignment, word, i, j - 1, word_alignment, diff,
                             pos)
@@ -104,6 +86,7 @@ def edit_distance(first_word, second_word):
     first_word_alignment = " "
     second_word_alignment = " "
 
+    # building the matrix
     for i in range(row):
         for j in range(col):
             if i == 0 or j == 0:
@@ -136,13 +119,11 @@ def edit_distance(first_word, second_word):
 
 
     # Print out information
+    print("Below are the results: \n")
     print("The matrix:")
     print(x)
-    print("The edit distance is: ", x[n, m])
-
-    print(alignment)
-    # print("i =", i)
-    # print("j =", j)
+    print("\nThe edit distance is: ", x[n, m])
+    print("\nThe alignment is:")
 
     # Print Alignment
     first_word_alignment = " "
@@ -159,19 +140,28 @@ def edit_distance(first_word, second_word):
 
 
 def main():
-    #first_word = "evaluation"
-    # second_word = "revolution"
 
-    first_word = "EXECUTION"
-    second_word = "INTENTION"
+    # Welcome message
+    print("Welcome! This program calculates the edit distance between two words "
+          "and output both the matrix of distance calculation and an alignment "
+          "that demonstrates the result.\n")
+    print("Please follow the prompts below to input your words. Input cannot "
+          "contain a number or symbol and no need for a space before or after entering your word.\n")
 
-    # Accept User Input
-    # TODO: Input Validation
-    # first_word = input("Enter first word: ")
-    # print("First word is: " + first_word)
 
-    #  second_word = input("Enter second word:")
-    # print("Second word is: " + second_word)
+    # Accept User Input and validate that it is a string
+
+    first_word = input("Enter first word: ")
+    if not first_word.isalpha():
+        while first_word.isalpha() is False:
+            print("Input cannot contain a number, please try again.")
+            first_word = input("Enter first word: ")
+
+    second_word = input("Enter second word: ")
+    if not second_word.isalpha():
+        while second_word.isalpha() is False:
+            print("Input cannot contain a number, please try again.")
+            second_word = input("Enter second word: \n")
 
     edit_distance(first_word, second_word)
 
